@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-grafana-datasources
+data:
+  ds.yaml: |-
+    {
+      "apiVersion": 1,
+      "datasources": [
+          {
+            "access": "proxy",
+            "uid":"influxdb",
+            "editable": true,
+            "name": "InfluxDB_v2_Flux",
+            "type": "influxdb",
+            "url": "http://influxdb.default.svc.cluster.local:8086",
+            "jsonData": {
+              "version": "Flux",
+              "organization": "primary",
+              "defaultBucket": "primary",
+              "tlsSkipVerify": true
+            },
+            "secureJsonData": {
+              "token": "${INFLUXDB_TOKEN}"
+            }
+          }
+      ]
+    }

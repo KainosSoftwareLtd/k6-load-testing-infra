@@ -1,0 +1,7 @@
+auth:
+  admin:
+    username: {{ .Values.influxdb_admin_username }}
+    password: {{ .Values.influxdb_admin_password }}
+    token: {{ .Values.influxdb_auth_token }}
+persistence:
+  enabled: false
