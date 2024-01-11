@@ -1,0 +1,23 @@
+repositories:
+ - name: grafana
+   url: https://grafana.github.io/helm-charts
+environments:
+  default:
+    secrets:
+    - secrets/influxdb-secrets.yaml
+---
+releases:
+  - name: influxdb
+    chart: oci://registry-1.docker.io/bitnamicharts/influxdb
+    version: 5.9.10
+    values:
+      - chart-values/influxdb.yaml.gotmpl
+  - name: k6-operator
+    chart: grafana/k6-operator
+  - name: grafana
+    namespace: monitoring
+    chart: ./grafana
+    values:
+      - grafana/values.yaml.gotmpl
+  - name: namegenerator
+    chart: ./namegenerator

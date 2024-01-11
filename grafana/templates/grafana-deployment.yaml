@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      name: grafana
+      labels:
+        app: grafana
+    spec:
+      containers: 
+      - name: grafana
+        image: grafana/grafana:latest
+        env:
+          - name: INFLUXDB_TOKEN
+            value: {{ .Values.inflxdb_token }}
+        ports:
+        - name: grafana
+          containerPort: 3000
+        volumeMounts:
+          - mountPath: /etc/grafana/provisioning/datasources
+            name: grafana-datasources
+            readOnly: false
+          - mountPath: /var/lib/grafana/dashboards
+            name: grafana-dashboard-template
+            readOnly: false
+          - mountPath: /etc/grafana/provisioning/dashboards
+            name: grafana-dashboard
+        
+      volumes:
+        - name: grafana-datasources
+          configMap:
+              defaultMode: 420
+              name: my-grafana-datasources
+        - name: grafana-dashboard-template
+          configMap:
+              defaultMode: 420
+              name: my-grafana-dashboard
+        - name: grafana-dashboard
+          configMap:
+              defaultMode: 420
+              name: grafana-dashboard-observer
+      securityContext:
+        fsGroup: 472
+        runAsUser: 472
+        supplementalGroups:
+          - 0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '3000'
+spec:
+  selector: 
+    app: grafana
+  type: ClusterIP  
+  ports:
+    - port: 3000
+      targetPort: 3000
