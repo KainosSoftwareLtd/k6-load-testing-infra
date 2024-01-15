@@ -21,4 +21,8 @@ spec:
       - name: K6_INFLUXDB_BUCKET
         value: primary
       - name: K6_INFLUXDB_TOKEN
-        value: 14FNL24BhYy2AD4an0YmYdhA7EdeQzTq8fETDSmR_53ilC998EGohu-efnfLrhMGN0ZzFusqTBTb5SIGRXLsCQ==
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-secrets
+            key: influxdb_token
+        
