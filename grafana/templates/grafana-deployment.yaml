@@ -18,7 +18,7 @@ spec:
         image: grafana/grafana:latest
         env:
           - name: INFLUXDB_TOKEN
-            value: {{ .Values.inflxdb_token }}
+            value: {{ .Values.influxdb_token }}
         ports:
         - name: grafana
           containerPort: 3000
