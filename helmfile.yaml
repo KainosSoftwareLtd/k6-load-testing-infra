@@ -11,13 +11,17 @@ releases:
     chart: oci://registry-1.docker.io/bitnamicharts/influxdb
     version: 5.9.10
     values:
-      - chart-values/influxdb.yaml.gotmpl
+      - chart-values/influxdb-values.yaml.gotmpl
   - name: k6-operator
     chart: grafana/k6-operator
   - name: grafana
     namespace: monitoring
     chart: ./grafana
     values:
-      - grafana/values.yaml.gotmpl
+      - chart-values/grafana-values.yaml.gotmpl
   - name: namegenerator
     chart: ./namegenerator
+  - name: secret-manager
+    chart: ./secret-manager
+    values:
+      - chart-values/secret-manager-values.yaml.gotmpl
