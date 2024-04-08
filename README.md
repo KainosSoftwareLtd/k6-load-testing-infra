@@ -194,3 +194,7 @@ spec:
       file: test.js
   arguments:  --tag testid=mytestid
 ```
+
+server:
+  persistentVolume:
+    enabled: false
