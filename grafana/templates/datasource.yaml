@@ -23,6 +23,13 @@ data:
             "secureJsonData": {
               "token": "${INFLUXDB_TOKEN}"
             }
+          },
+          {
+            "name": "prometheus",
+            "type": "prometheus",
+            "url": "http://prometheus-server.prometheus.svc.cluster.local",
+            "access": "proxy",
+            "basicAuth": false
           }
       ]
     }
