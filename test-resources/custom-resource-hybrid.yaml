@@ -1,0 +1,28 @@
+# k6-resource-with-extensions.yml
+
+apiVersion: k6.io/v1alpha1
+kind: TestRun
+metadata:
+  name: k6-sample-with-extensions
+spec:
+  parallelism: 4
+  script:
+    configMap:
+      name: hybrid-test
+      file: hybridTest.js
+  arguments:  --tag testid=hybridTest
+  runner:
+    image: kacperbober2/k6-extendted-influxdb-browser:latest
+    env:
+      - name: K6_OUT
+        value: xk6-influxdb=http://influxdb.default.svc.cluster.local:8086
+      - name: K6_INFLUXDB_ORGANIZATION
+        value: primary
+      - name: K6_INFLUXDB_BUCKET
+        value: primary
+      - name: K6_INFLUXDB_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-secrets
+            key: influxdb_token
+        
