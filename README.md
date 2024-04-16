@@ -13,20 +13,16 @@ Make sure you have the following tools installed:
 
 ## Storing credentials for Kubernetes
 
-For safety reasons credientials (auth tokens, login credentials) are stored using [Environment Secrets](https://helmfile.readthedocs.io/en/latest/#environment-secrets) utilizing the helm-secrets plugin. In this repository, I rely on sops and PGP keys using GnuPG. After installing sops and gnupg and generating pgp key, you need to modify the .sops.yaml file to specify which PGP key to use.
-```yaml
-creation_rules:
-    - pgp: "<your_pgp_key>"
-``` 
-The next step is to modify influxdb-secrets.yaml.dec and provide correct credentials and authentication token. The token can be generated using the [InfluxDB UI](https://docs.influxdata.com/influxdb/cloud/admin/tokens/create-token/). An exemplary token is as follows:
+FOR SIMPLICITY THIS BRANCH HAS NO ENCRYPTION !!!
+Simply change credentials in [this file](./secrets/influxdb-secrets-decrypted.yaml). Example of correct token:
+
 ```yaml
 influxdb_auth_token: 14FNL24BhYy2AD4an0YmYdhA7EdeQzTq8fETDSmR_53ilC998EGohu-efnfLrhMGN0ZzFusqTBTb5SIGRXLsCQ==
-```
-The last step is to generate the encrypted version of influxdb-secrets.yaml.dec. This can be done using the following command. After completing this step, the decrypted version can be safely deleted.
+``` 
+To secure the repo you could integrate it with AWS Secrets Manager or Azure KeyVault or sops. Resources
+[[1]](https://helmfile.readthedocs.io/en/latest/remote-secrets/)
+[[2]](https://fenyuk.medium.com/helm-for-kubernetes-handling-secrets-with-sops-d8149df6eda4)
 
-```bash
-helm secrets encrypt ./secrets/influxdb-secrets.yaml.dec > ./secrets/influxdb-secrets.yaml
-```
 
 ## Building local kubernetes cluster
 

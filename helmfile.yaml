@@ -5,8 +5,8 @@ repositories:
    url: https://prometheus-community.github.io/helm-charts
 environments:
   default:
-    secrets:
-    - secrets/influxdb-secrets.yaml
+    values:
+    - secrets/influxdb-secrets-decrypted.yaml
 ---
 releases:
   - name: influxdb
