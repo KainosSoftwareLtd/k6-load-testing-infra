@@ -13,6 +13,8 @@ Make sure you have the following tools installed:
 
 ## Storing credentials for Kubernetes
 
+On branch [simplified-training-version](https://github.com/KainosSoftwareLtd/k6-load-testing-infra/tree/simplified-training-version) there is a version of this repo without encryption. If you don't want to use sops or you want to integrate it with AWS Secrets Manager or Azure KeyVault this would be the branch that you would like to start with.
+
 For safety reasons credientials (auth tokens, login credentials) are stored using [Environment Secrets](https://helmfile.readthedocs.io/en/latest/#environment-secrets) utilizing the helm-secrets plugin. In this repository, I rely on sops and PGP keys using GnuPG. After installing sops and gnupg and generating pgp key, you need to modify the .sops.yaml file to specify which PGP key to use.
 ```yaml
 creation_rules:
